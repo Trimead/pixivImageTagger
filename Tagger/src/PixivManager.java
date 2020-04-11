@@ -49,6 +49,11 @@ public class PixivManager {
 							String[] data = utils.readFromFile("downloadedData/temp"+s+".html");
 							int scriptEndLine = 0;
 							while (scriptEndLine<data.length) {
+								if (data[scriptEndLine].contains("<div class=\"_unit error-unit\">")) {
+									System.out.println("Skipping image "+s+" because webpage cannot be found.");
+									utils.logToFile(s, "skippedItems.txt");
+									break;
+								}
 								if (data[scriptEndLine].contains("<meta name=\"preload-data\" id=\"meta-preload-data\" content='")) {
 									System.out.println("Found JSON Target line at line "+scriptEndLine+". :: "+data[scriptEndLine] );
 									break;
